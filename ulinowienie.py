@@ -1,7 +1,6 @@
 def find_seeds(i,j):
-    keys = i.keys()
-    seed = {}
-    for ite in keys:
+    seed = dict()
+    for ite in i:
         if ite in j:
             for k in range(len(i[ite])):
                 for l in range(len(j[ite])):
@@ -11,38 +10,50 @@ def find_seeds(i,j):
                         seed[i[ite][k]-j[ite][l]].append((i[ite][k], j[ite][l]))
     return seed
 
+def find_match(seeds):
+    matchs = dict()
+    for i in seeds:
+        lista_krotek = sorted(seeds[i])
+        match = [lista_krotek[0][0], lista_krotek[0][1], 3]
+        for j in range(len(lista_krotek)-1):
+            dlugosc = lista_krotek[j+1][0] - lista_krotek[j][0]
+            if dlugosc < 9:
+                match[2] += dlugosc
+            else:
+                match = [lista_krotek[j+1][0], lista_krotek[j+1][1], 3]
+                if i not in matchs:
+                    matchs[i] = [match]
+                else:
+                    matchs[i].append(match)
+    return matchs
 
 plik = open("sekwencje.fasta")
-sequences = []
-pom = []
+sequences = list()
+pom = list()
 for i in plik:
-#    print(len(i))
     if i[0] == '>':
         pom.append(i[2:7])
     elif len(i) != 1 and i[0] != '>':
         pom.append(i[:len(i)-1])
         sequences.append(tuple(pom))
-        pom = []    
-#print(sequences)
-#sequences = [("3w12B","CGSHLVEALYLVCGE"), ("2czyB", "APQLIMLANVALTGE")]
-tuples_list = []
-tuples_map = []
+        pom = list()    
+
+tuples_list = list()
+tuples_map = list()
 for i in sequences:
-    pom = []
+    pom = list()
     for j in range(0,len(i[1])-2):
        pom.append(i[1][j:j+3])
     tuples_list.append(pom)
-#print(tuples_list)
+
 for i in range(len(tuples_list)):
-    pom_tuple = {}
+    pom_tuple = dict()
     for j in range(len(tuples_list[i])):
         if tuples_list[i][j] not in pom_tuple:
             pom_tuple[tuples_list[i][j]] = [j]
         else:
             pom_tuple[tuples_list[i][j]].append(j)
     tuples_map.append(pom_tuple)
-#print(tuples_map)
-for i in range(len(tuples_map)):
-    for j in range(i, len(tuples_map)):
-        if i != j:
-            print(find_seeds(tuples_map[i], tuples_map[j]))
+    
+seeds = find_seeds(tuples_map[1221], tuples_map[1222])
+print(find_match(seeds))
