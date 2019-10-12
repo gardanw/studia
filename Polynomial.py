@@ -18,8 +18,44 @@ class Polynomial :
         for i in range(len(wsp)):
             self.__wspolczynniki[i] += wsp[i]
         return self
+    
+    def __add__(self, wielomian):
+        wsp = wielomian.__wspolczynniki
+        dlu = len(wsp) - len(self.__wspolczynniki)
+        for i in range(dlu):
+            self.__wspolczynniki.append(0)
+        for i in range(len(wsp)):
+            self.__wspolczynniki[i] += wsp[i]
+        return self
 
+    def __iadd__(self, wielomian):
+        wsp = wielomian.__wspolczynniki
+        dlu = len(wsp) - len(self.__wspolczynniki)
+        for i in range(dlu):
+            self.__wspolczynniki.append(0)
+        for i in range(len(wsp)):
+            self.__wspolczynniki[i] += wsp[i]
+        return self
+    
     def sub(self, wielomian):
+        wsp = wielomian.__wspolczynniki
+        dlu = len(wsp) - len(self.__wspolczynniki)
+        for i in range(dlu):
+            self.__wspolczynniki.append(0)
+        for i in range(len(wsp)):
+            self.__wspolczynniki[i] -= wsp[i]
+        return self
+    
+    def __sub__(self, wielomian):
+        wsp = wielomian.__wspolczynniki
+        dlu = len(wsp) - len(self.__wspolczynniki)
+        for i in range(dlu):
+            self.__wspolczynniki.append(0)
+        for i in range(len(wsp)):
+            self.__wspolczynniki[i] -= wsp[i]
+        return self
+    
+    def __isub__(self, wielomian):
         wsp = wielomian.__wspolczynniki
         dlu = len(wsp) - len(self.__wspolczynniki)
         for i in range(dlu):
@@ -37,7 +73,28 @@ class Polynomial :
             for j in range(len(wielomian.__wspolczynniki)):
                 wyniki[j+i] += self.__wspolczynniki[i] * wielomian.__wspolczynniki[j]
         self.__wspolczynniki = wyniki
-#        return Polynomial(wyniki[::-1])
+        return self
+    
+    def __mul__(self, wielomian):
+        dl = len(self.__wspolczynniki) + len(wielomian.__wspolczynniki) - 1
+        wyniki = list()
+        for i in range(dl):
+            wyniki.append(0)
+        for i in range(len(self.__wspolczynniki)):
+            for j in range(len(wielomian.__wspolczynniki)):
+                wyniki[j+i] += self.__wspolczynniki[i] * wielomian.__wspolczynniki[j]
+        self.__wspolczynniki = wyniki
+        return self
+    
+    def __imul__(self, wielomian):
+        dl = len(self.__wspolczynniki) + len(wielomian.__wspolczynniki) - 1
+        wyniki = list()
+        for i in range(dl):
+            wyniki.append(0)
+        for i in range(len(self.__wspolczynniki)):
+            for j in range(len(wielomian.__wspolczynniki)):
+                wyniki[j+i] += self.__wspolczynniki[i] * wielomian.__wspolczynniki[j]
+        self.__wspolczynniki = wyniki
         return self
     
     def differentiate(self):
@@ -48,7 +105,6 @@ class Polynomial :
         for i in range(len(wyniki)):
             wyniki[i] = self.__wspolczynniki[i+1]*(i+1)
         self.__wspolczynniki = wyniki
-#        return Polynomial(wyniki[::-1])
         return self
     
     def integrate(self):
@@ -59,7 +115,6 @@ class Polynomial :
         for i in range(len(wyniki)-1):
             wyniki[i+1] = self.__wspolczynniki[i]/(i+1)
         self.__wspolczynniki = wyniki
-#        return Polynomial(wyniki[::-1])
         return self
     
     def eval(self, x):
@@ -80,14 +135,14 @@ class Polynomial :
                 string += '+' + str(self.__wspolczynniki[len(self.__wspolczynniki)-1-i])\
                 + 'x^' + str(len(self.__wspolczynniki)-1-i)
         return string
-    
+
 if __name__ == "__main__":
     t0 = Polynomial(1)
     t1 = Polynomial(1,0)
     k = 128
     for i in range(k-1):
         pom = Polynomial(2,0)
-        tk = pom.mul(t1).sub(t0)
+        tk = pom * t1 - t0
         t0 = t1
         t1 = tk
     print(tk)
