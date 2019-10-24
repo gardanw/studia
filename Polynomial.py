@@ -1,5 +1,6 @@
 class Polynomial :
     __slots__ = ['__wspolczynniki']
+    
     def __init__(self, *args):
         self.__wspolczynniki = list()
         if len(args) == 1 and type(args[0]) == list:
@@ -11,122 +12,128 @@ class Polynomial :
                 self.__wspolczynniki.append(i)
             self.__wspolczynniki = self.__wspolczynniki[::-1]
     
-    def add(self, wielomian):
-        if type(wielomian) == Polynomial:
-            wsp = wielomian.__wspolczynniki
+    def add(self, other):
+        if type(other) == Polynomial:
+            wsp = other.__wspolczynniki
             dlu = len(wsp) - len(self.__wspolczynniki)
             for i in range(dlu):
                 self.__wspolczynniki.append(0)
             for i in range(len(wsp)):
                 self.__wspolczynniki[i] += wsp[i]
         else:
-            self.__wspolczynniki[0] += wielomian
+            self.__wspolczynniki[0] += other
         return self
     
-    def __add__(self, wielomian):
-        if type(wielomian) == Polynomial:
-            wsp = wielomian.__wspolczynniki
-            dlu = len(wsp) - len(self.__wspolczynniki)
-            for i in range(dlu):
-                self.__wspolczynniki.append(0)
-            for i in range(len(wsp)):
-                self.__wspolczynniki[i] += wsp[i]
-        else:
-            self.__wspolczynniki[0] += wielomian
-        return self
+    def __add__(self, other):
+        return self.add(other)
+#        if type(other) == Polynomial:
+#            wsp = other.__wspolczynniki
+#            dlu = len(wsp) - len(self.__wspolczynniki)
+#            for i in range(dlu):
+#                self.__wspolczynniki.append(0)
+#            for i in range(len(wsp)):
+#                self.__wspolczynniki[i] += wsp[i]
+#        else:
+#            self.__wspolczynniki[0] += other
+#        return self
 
-    def __iadd__(self, wielomian):
-        if type(wielomian) == Polynomial:
-            wsp = wielomian.__wspolczynniki
-            dlu = len(wsp) - len(self.__wspolczynniki)
-            for i in range(dlu):
-                self.__wspolczynniki.append(0)
-            for i in range(len(wsp)):
-                self.__wspolczynniki[i] += wsp[i]
-        else:
-            self.__wspolczynniki[0] += wielomian
-        return self
+    def __iadd__(self, other):
+        return self.add(other)
+#        if type(other) == Polynomial:
+#            wsp = other.__wspolczynniki
+#            dlu = len(wsp) - len(self.__wspolczynniki)
+#            for i in range(dlu):
+#                self.__wspolczynniki.append(0)
+#            for i in range(len(wsp)):
+#                self.__wspolczynniki[i] += wsp[i]
+#        else:
+#            self.__wspolczynniki[0] += other
+#        return self
     
-    def sub(self, wielomian):
-        if type(wielomian) == Polynomial:
-            wsp = wielomian.__wspolczynniki
-            dlu = len(wsp) - len(self.__wspolczynniki)
-            for i in range(dlu):
-                self.__wspolczynniki.append(0)
-            for i in range(len(wsp)):
-                self.__wspolczynniki[i] -= wsp[i]
-        else:
-            self.__wspolczynniki[0] -= wielomian
-        return self
-    
-    def __sub__(self, wielomian):
-        if type(wielomian) == Polynomial:
-            wsp = wielomian.__wspolczynniki
+    def sub(self, other):
+        if type(other) == Polynomial:
+            wsp = other.__wspolczynniki
             dlu = len(wsp) - len(self.__wspolczynniki)
             for i in range(dlu):
                 self.__wspolczynniki.append(0)
             for i in range(len(wsp)):
                 self.__wspolczynniki[i] -= wsp[i]
         else:
-            self.__wspolczynniki[0] -= wielomian
+            self.__wspolczynniki[0] -= other
         return self
     
-    def __isub__(self, wielomian):
-        if type(wielomian) == Polynomial:
-            wsp = wielomian.__wspolczynniki
-            dlu = len(wsp) - len(self.__wspolczynniki)
-            for i in range(dlu):
-                self.__wspolczynniki.append(0)
-            for i in range(len(wsp)):
-                self.__wspolczynniki[i] -= wsp[i]
-        else:
-            self.__wspolczynniki[0] -= wielomian
-        return self
+    def __sub__(self, other):
+        return self.sub(other)
+#        if type(other) == Polynomial:
+#            wsp = other.__wspolczynniki
+#            dlu = len(wsp) - len(self.__wspolczynniki)
+#            for i in range(dlu):
+#                self.__wspolczynniki.append(0)
+#            for i in range(len(wsp)):
+#                self.__wspolczynniki[i] -= wsp[i]
+#        else:
+#            self.__wspolczynniki[0] -= other
+#        return self
     
-    def mul(self, wielomian):
-        if type(wielomian) == Polynomial:
-            dl = len(self.__wspolczynniki) + len(wielomian.__wspolczynniki) - 1
+    def __isub__(self, other):
+        return self.sub(other)
+#        if type(other) == Polynomial:
+#            wsp = other.__wspolczynniki
+#            dlu = len(wsp) - len(self.__wspolczynniki)
+#            for i in range(dlu):
+#                self.__wspolczynniki.append(0)
+#            for i in range(len(wsp)):
+#                self.__wspolczynniki[i] -= wsp[i]
+#        else:
+#            self.__wspolczynniki[0] -= other
+#        return self
+    
+    def mul(self, other):
+        if type(other) == Polynomial:
+            dl = len(self.__wspolczynniki) + len(other.__wspolczynniki) - 1
             wyniki = list()
             for i in range(dl):
                 wyniki.append(0)
             for i in range(len(self.__wspolczynniki)):
-                for j in range(len(wielomian.__wspolczynniki)):
-                    wyniki[j+i] += self.__wspolczynniki[i] * wielomian.__wspolczynniki[j]
+                for j in range(len(other.__wspolczynniki)):
+                    wyniki[j+i] += self.__wspolczynniki[i] * other.__wspolczynniki[j]
             self.__wspolczynniki = wyniki
         else:
             for i in range(len(self.__wspolczynniki)):
-                self.__wspolczynniki[i] *= wielomian
+                self.__wspolczynniki[i] *= other
         return self
     
-    def __mul__(self, wielomian):
-        if type(wielomian) == Polynomial:
-            dl = len(self.__wspolczynniki) + len(wielomian.__wspolczynniki) - 1
-            wyniki = list()
-            for i in range(dl):
-                wyniki.append(0)
-            for i in range(len(self.__wspolczynniki)):
-                for j in range(len(wielomian.__wspolczynniki)):
-                    wyniki[j+i] += self.__wspolczynniki[i] * wielomian.__wspolczynniki[j]
-            self.__wspolczynniki = wyniki
-        else:
-            for i in range(len(self.__wspolczynniki)):
-                self.__wspolczynniki[i] *= wielomian
-        return self
+    def __mul__(self, other):
+        return self.mul(other)
+#        if type(other) == Polynomial:
+#            dl = len(self.__wspolczynniki) + len(other.__wspolczynniki) - 1
+#            wyniki = list()
+#            for i in range(dl):
+#                wyniki.append(0)
+#            for i in range(len(self.__wspolczynniki)):
+#                for j in range(len(other.__wspolczynniki)):
+#                    wyniki[j+i] += self.__wspolczynniki[i] * other.__wspolczynniki[j]
+#            self.__wspolczynniki = wyniki
+#        else:
+#            for i in range(len(self.__wspolczynniki)):
+#                self.__wspolczynniki[i] *= other
+#        return self
     
-    def __imul__(self, wielomian):
-        if type(wielomian) == Polynomial:
-            dl = len(self.__wspolczynniki) + len(wielomian.__wspolczynniki) - 1
-            wyniki = list()
-            for i in range(dl):
-                wyniki.append(0)
-            for i in range(len(self.__wspolczynniki)):
-                for j in range(len(wielomian.__wspolczynniki)):
-                    wyniki[j+i] += self.__wspolczynniki[i] * wielomian.__wspolczynniki[j]
-            self.__wspolczynniki = wyniki
-        else:
-            for i in range(len(self.__wspolczynniki)):
-                self.__wspolczynniki[i] *= wielomian
-        return self
+    def __imul__(self, other):
+        return self.mul(other)
+#        if type(other) == Polynomial:
+#            dl = len(self.__wspolczynniki) + len(other.__wspolczynniki) - 1
+#            wyniki = list()
+#            for i in range(dl):
+#                wyniki.append(0)
+#            for i in range(len(self.__wspolczynniki)):
+#                for j in range(len(other.__wspolczynniki)):
+#                    wyniki[j+i] += self.__wspolczynniki[i] * other.__wspolczynniki[j]
+#            self.__wspolczynniki = wyniki
+#        else:
+#            for i in range(len(self.__wspolczynniki)):
+#                self.__wspolczynniki[i] *= other
+#        return self
     
     def differentiate(self):
         dl = len(self.__wspolczynniki) - 1
@@ -166,6 +173,12 @@ class Polynomial :
                 string += '+' + str(self.__wspolczynniki[len(self.__wspolczynniki)-1-i])\
                 + 'x^' + str(len(self.__wspolczynniki)-1-i)
         return string
+    
+    def __eq__(self, other):
+        if self.__wspolczynniki == other.__wspolczynniki:
+            return True
+        else:
+            return False
 
 if __name__ == "__main__":
     t0 = Polynomial(1)
@@ -181,3 +194,10 @@ if __name__ == "__main__":
     print(x)
     x.mul(2)
     print(x)
+    
+    w1 = Polynomial(2,1)
+    w2 = Polynomial(2,1)
+    print(w1, "*", w1, "=")
+    w1 *= w2
+    
+    print(w1)
