@@ -26,29 +26,9 @@ class Polynomial :
     
     def __add__(self, other):
         return self.add(other)
-#        if type(other) == Polynomial:
-#            wsp = other.__wspolczynniki
-#            dlu = len(wsp) - len(self.__wspolczynniki)
-#            for i in range(dlu):
-#                self.__wspolczynniki.append(0)
-#            for i in range(len(wsp)):
-#                self.__wspolczynniki[i] += wsp[i]
-#        else:
-#            self.__wspolczynniki[0] += other
-#        return self
 
     def __iadd__(self, other):
         return self.add(other)
-#        if type(other) == Polynomial:
-#            wsp = other.__wspolczynniki
-#            dlu = len(wsp) - len(self.__wspolczynniki)
-#            for i in range(dlu):
-#                self.__wspolczynniki.append(0)
-#            for i in range(len(wsp)):
-#                self.__wspolczynniki[i] += wsp[i]
-#        else:
-#            self.__wspolczynniki[0] += other
-#        return self
     
     def sub(self, other):
         if type(other) == Polynomial:
@@ -64,29 +44,9 @@ class Polynomial :
     
     def __sub__(self, other):
         return self.sub(other)
-#        if type(other) == Polynomial:
-#            wsp = other.__wspolczynniki
-#            dlu = len(wsp) - len(self.__wspolczynniki)
-#            for i in range(dlu):
-#                self.__wspolczynniki.append(0)
-#            for i in range(len(wsp)):
-#                self.__wspolczynniki[i] -= wsp[i]
-#        else:
-#            self.__wspolczynniki[0] -= other
-#        return self
     
     def __isub__(self, other):
         return self.sub(other)
-#        if type(other) == Polynomial:
-#            wsp = other.__wspolczynniki
-#            dlu = len(wsp) - len(self.__wspolczynniki)
-#            for i in range(dlu):
-#                self.__wspolczynniki.append(0)
-#            for i in range(len(wsp)):
-#                self.__wspolczynniki[i] -= wsp[i]
-#        else:
-#            self.__wspolczynniki[0] -= other
-#        return self
     
     def mul(self, other):
         if type(other) == Polynomial:
@@ -105,36 +65,10 @@ class Polynomial :
     
     def __mul__(self, other):
         return self.mul(other)
-#        if type(other) == Polynomial:
-#            dl = len(self.__wspolczynniki) + len(other.__wspolczynniki) - 1
-#            wyniki = list()
-#            for i in range(dl):
-#                wyniki.append(0)
-#            for i in range(len(self.__wspolczynniki)):
-#                for j in range(len(other.__wspolczynniki)):
-#                    wyniki[j+i] += self.__wspolczynniki[i] * other.__wspolczynniki[j]
-#            self.__wspolczynniki = wyniki
-#        else:
-#            for i in range(len(self.__wspolczynniki)):
-#                self.__wspolczynniki[i] *= other
-#        return self
     
     def __imul__(self, other):
         return self.mul(other)
-#        if type(other) == Polynomial:
-#            dl = len(self.__wspolczynniki) + len(other.__wspolczynniki) - 1
-#            wyniki = list()
-#            for i in range(dl):
-#                wyniki.append(0)
-#            for i in range(len(self.__wspolczynniki)):
-#                for j in range(len(other.__wspolczynniki)):
-#                    wyniki[j+i] += self.__wspolczynniki[i] * other.__wspolczynniki[j]
-#            self.__wspolczynniki = wyniki
-#        else:
-#            for i in range(len(self.__wspolczynniki)):
-#                self.__wspolczynniki[i] *= other
-#        return self
-    
+
     def differentiate(self):
         dl = len(self.__wspolczynniki) - 1
         wyniki = list()

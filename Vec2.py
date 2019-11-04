@@ -1,5 +1,4 @@
-import math
-from copy import deepcopy as dc
+# import math
 
 class Vec2 :
 
@@ -50,6 +49,22 @@ class Vec2 :
         new.__y = new.__y/self.length()
         return new
 
+    @property
+    def x(self):
+        return self.__x
+
+    @property
+    def y(self):
+        return self.__y
+
+    @x.setter
+    def x(self, x):
+        self.__x = x
+
+    @y.setter
+    def y(self, y):
+        self.__y = y
+
 
 if __name__ == "__main__":
     w1 = Vec2(5,1)
@@ -57,5 +72,3 @@ if __name__ == "__main__":
     print(w1.length(), w2.length())
     print(w1.dp(w2))
     print(w1.normalize().length())
-#    w1 -= w2
-#    print(w1.length())
