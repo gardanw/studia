@@ -1,7 +1,7 @@
 from Vec2 import Vec2
 
 class Atom :
-    def __init__(self, m=1, v=None, pos=None, r=0):
+    def __init__(self, m=1, v=Vec2(0, 0), pos=Vec2(0, 0), r=0):
         self.__m = m
         self.__v = v
         self.__pos = pos

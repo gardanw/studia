@@ -1,5 +1,5 @@
 class System :
-    def __init__(self, atoms, scene):
+    def __init__(self, atoms, scene, polygons):
         pass
 
     def __str__(self):
