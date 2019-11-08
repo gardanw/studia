@@ -1,4 +1,5 @@
 # import math
+from copy import deepcopy as dc
 
 class Vec2 :
 
