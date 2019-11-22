@@ -1,6 +1,17 @@
 # import math
 from copy import deepcopy as dc
 
+def point_on_segment_projection(point, w1, w2):
+    p = dc(point)
+    b = dc(w1)
+    e = dc(w2)
+    odc = dc(b) - dc(e)
+    t = ((p.x - b.x)*(e.x - b.x) + (p.y - b.y)*(e.y - b.y))/odc.length()**2
+    n_point = odc.mul(t) + e
+    d = n_point - p
+
+    return d.length(), t
+
 class Vec2 :
 
     def __init__(self, *args):
@@ -13,7 +24,7 @@ class Vec2 :
 
     def __str__(self):
         string = str()
-        string += str(self.__x) + ', ' + str(self.__y)
+        string += '(' + str(self.__x) + ', ' + str(self.__y) + ')'
         return string
 
     def add(self, other):
@@ -37,6 +48,11 @@ class Vec2 :
 
     def __isub__(self, other): 
         return self.sub(other)
+
+    def mul(self, other):
+        self.__x *= other
+        self.__y *= other
+        return self
     
     def dp(self, other):
         return (self.__x * other.__x) + (self.__y * other.__y)
@@ -49,6 +65,9 @@ class Vec2 :
         new.__x = new.__x/self.length()
         new.__y = new.__y/self.length()
         return new
+
+    def distance(self, other):
+        pass
 
     @property
     def x(self):
@@ -68,8 +87,9 @@ class Vec2 :
 
 
 if __name__ == "__main__":
-    w1 = Vec2(5,1)
-    w2 = Vec2(-2,4)
-    print(w1.length(), w2.length())
-    print(w1.dp(w2))
-    print(w1.normalize().length())
+    point = Vec2(3, 3)
+    w1 = Vec2(1, 1)
+    w2 = Vec2(5, 5)
+    print(w1)
+    print(point_on_segment_projection(point, w1, w2))
+    # print((w1 - w2).length()**2)
