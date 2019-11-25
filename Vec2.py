@@ -85,6 +85,9 @@ class Vec2 :
     def y(self, y):
         self.__y = y
 
+    def __repr__(self):
+        return self.__str__()
+
 
 if __name__ == "__main__":
     point = Vec2(3, 3)

@@ -27,9 +27,12 @@ class Atom :
     def r(self):
         return self.__r
 
-    # @x.setter
-    # def x(self, x):
-    #     self.__x = x
+    def __repr__(self):
+        return self.__str__()
+
+    @pos.setter
+    def pos(self, pos):
+        self.__pos = pos
     #
     # @y.setter
     # def y(self, y):

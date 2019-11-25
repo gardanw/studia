@@ -29,6 +29,13 @@ class Polygon(Atom):
     def __str__(self):
         return 'pos = ' + str(self.pos) + ' count nodes = ' + str(len(self.__nodes)) + ' r = ' + str(self.r)
 
+    @property
+    def nodes(self):
+        return self.__nodes
+
+    def __repr__(self):
+        return self.__str__()
+
 if __name__ == '__main__':
     pol = Polygon([Vec2(0, 1), Vec2(1, 0), Vec2(0, 0), Vec2(10, 10)])
     print(pol)
