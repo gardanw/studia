@@ -33,6 +33,10 @@ class Atom :
     @pos.setter
     def pos(self, pos):
         self.__pos = pos
+        
+    @v.setter
+    def v(self, v):
+        self.__v = v
     #
     # @y.setter
     # def y(self, y):

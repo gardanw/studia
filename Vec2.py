@@ -5,12 +5,12 @@ def point_on_segment_projection(point, w1, w2):
     p = dc(point)
     b = dc(w1)
     e = dc(w2)
-    odc = dc(b) - dc(e)
+    odc = dc(e) - dc(b)
     t = ((p.x - b.x)*(e.x - b.x) + (p.y - b.y)*(e.y - b.y))/odc.length()**2
-    n_point = odc.mul(t) + e
+    n_point = odc.mul(t) + b
     d = n_point - p
 
-    return d.length(), t
+    return d, t
 
 class Vec2 :
 
@@ -91,8 +91,8 @@ class Vec2 :
 
 if __name__ == "__main__":
     point = Vec2(3, 3)
-    w1 = Vec2(1, 1)
+    w1 = Vec2(0, 0)
     w2 = Vec2(5, 5)
     print(w1)
-    print(point_on_segment_projection(point, w1, w2))
+    print(point_on_segment_projection(point, w1, w2)[0])
     # print((w1 - w2).length()**2)
