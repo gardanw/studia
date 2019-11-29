@@ -5,7 +5,7 @@ def point_on_segment_projection(point, w1, w2):
     p = dc(point)
     b = dc(w1)
     e = dc(w2)
-    odc = dc(e) - dc(b)
+    odc = dc(e) - b
     t = ((p.x - b.x)*(e.x - b.x) + (p.y - b.y)*(e.y - b.y))/odc.length()**2
     n_point = odc.mul(t) + b
     d = n_point - p
