@@ -30,7 +30,7 @@ class Solver :
 
     def update_pos(self):
         for atom in self.__system.get_atoms:
-            atom.pos = atom.pos + atom.v.mul(self.__dt)
+            atom.pos = atom.pos + dc(atom.v).mul(self.__dt)
     
     def collision_wall(self):
         for atom in self.__system.get_atoms:
@@ -82,4 +82,8 @@ if __name__ == '__main__':
     for atom in s.get_atoms:
         print(atom.pos)
     print(type(scena[0]), type(atomy[0]))
+<<<<<<< HEAD
     sym.run(1000000)
+=======
+    sym.run(120)
+>>>>>>> 43119256429e8ff52053058ba8ba416e86b43964
