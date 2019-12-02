@@ -5,7 +5,6 @@ from System import System
 from copy import deepcopy as dc
 import numpy as np
 import pygame, sys
-from pygame.math import Vector2
 
 
 def collision_w(atom, d):
@@ -75,15 +74,10 @@ class Solver:
                 if odl.length() <= self.__system.get_atoms[i].r + self.__system.get_atoms[j].r:
                     f = collision_a(self.__system.get_atoms[i], self.__system.get_atoms[j])
                     x = dc(self.__system.get_atoms[i].pos) - self.__system.get_atoms[j].pos
-                    print(f)
-                    print('i1', self.__system.get_atoms[i].v)
-                    print('j1', self.__system.get_atoms[j].v)
                     self.__system.get_atoms[i].v = self.__system.get_atoms[i].v - dc(x).mul(
                         self.__system.get_atoms[i].m * f)
-                    print('i', self.__system.get_atoms[i].v)
                     self.__system.get_atoms[j].v = self.__system.get_atoms[j].v + x.mul(
                         self.__system.get_atoms[j].m * f)
-                    print('j', self.__system.get_atoms[j].v)
 
     def run(self, time):
         for i in range(time):
@@ -132,18 +126,23 @@ class Solver:
             point = []
             for i in scen:
                 point.append([i[0], i[1]])
-            pygame.draw.polygon(self.window, kolor, point)
+            pygame.draw.polygon(self.window, pygame.Color(k1, k2, k3, 255), point)
         for atom, kolor in zip(self.__system.get_atoms, self.kolory_atom):
             #            print(atom.pos_get[0]+odl_pom/2, atom.pos_get[1]+odl_pom/2, 3.5, 3.5)
             center = (int(atom.pos[0]), int(atom.pos[1]))
             rad = dc(atom.r)
-            pygame.draw.circle(self.window, kolor, [int((center[0]) * 10), int((center[1]) * 10)], rad * 10)
+            pygame.draw.circle(self.window, kolor, [int((center[0]) * 10), int((center[1]) * 10)], rad * 10, 3)
 
 
 if __name__ == '__main__':
-    atomy = [Atom(v=Vec2(25, 25), pos=Vec2(20, 22), r=1), Atom(v=Vec2(-25, -25), pos=Vec2(30, 20), r=1),
-             Atom(v=Vec2(25, 25), pos=Vec2(41, 23), r=1), Atom(v=Vec2(-25, -25), pos=Vec2(15, 20), r=1),
-             Atom(v=Vec2(25, 25), pos=Vec2(37, 22), r=1), Atom(v=Vec2(-25, -25), pos=Vec2(16, 4), r=1)]
+    # atomy = [Atom(v=Vec2(25, 25), pos=Vec2(20, 22), r=1), Atom(v=Vec2(-25, -25), pos=Vec2(30, 20), r=1),
+    #          Atom(v=Vec2(25, 25), pos=Vec2(41, 23), r=1), Atom(v=Vec2(-25, -25), pos=Vec2(15, 20), r=1),
+    #          Atom(v=Vec2(25, 25), pos=Vec2(37, 22), r=1), Atom(v=Vec2(-25, -25), pos=Vec2(16, 4), r=1)]
+    atomy = []
+    n = 5
+    for i in range(n):
+        atomy.append(Atom(v=Vec2(np.random.randint(25), np.random.randint(25)),
+                          pos=Vec2(np.random.randint(5, 40), np.random.randint(5, 40)), r=np.random.randint(1, 5)))
     scena = [Polygon([Vec2(0, 0), Vec2(0, 50), Vec2(50, 50), Vec2(50, 0)])]
     s = System(atomy, scena)
     #    for atom in s.get_atoms:
