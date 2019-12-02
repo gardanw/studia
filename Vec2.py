@@ -90,9 +90,9 @@ class Vec2 :
 
 
 if __name__ == "__main__":
-    point = Vec2(3, 3)
+    point = Vec2([3, 3])
     w1 = Vec2(0, 0)
     w2 = Vec2(5, 5)
-    print(w1)
-    print(point_on_segment_projection(point, w1, w2)[0])
+    print([w1,w2])
+#    print(point_on_segment_projection(point, w1, w2)[0])
     # print((w1 - w2).length()**2)

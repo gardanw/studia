@@ -52,7 +52,7 @@ class Solver :
 #            print(self.__system.get_atoms[i])
             for j in range(i+1,len(self.__system.get_atoms)):
 #                if self.__system.get_atoms[i] != self.__system.get_atoms[j]:
-                print(self.__system.get_atoms[j])
+#                print(self.__system.get_atoms[j])
                 odl = dc(self.__system.get_atoms[i].pos) - self.__system.get_atoms[j].pos
                 if odl.length() <= self.__system.get_atoms[i].r + self.__system.get_atoms[j].r:
                     f = collision_a(self.__system.get_atoms[i], self.__system.get_atoms[j])
@@ -69,7 +69,7 @@ class Solver :
 
 
 if __name__ == '__main__':
-    atomy = [Atom(v=Vec2(1, 1), pos=Vec2(1, 1), r=1), Atom(v=Vec2(1, 1), pos=Vec2(2, 2), r=1), Atom(v=Vec2(1, 1), pos=Vec2(1, 9), r=2), Atom(v=Vec2(1, 1), pos=Vec2(9, 1), r=2)]
+    atomy = [Atom(v=Vec2(1, 1), pos=Vec2(2, 2), r=1), Atom(v=Vec2(1, 1), pos=Vec2(4, 4), r=1), Atom(v=Vec2(1, 1), pos=Vec2(2, 8), r=1), Atom(v=Vec2(1, 1), pos=Vec2(8, 2), r=1)]
     scena = [Polygon([Vec2(0, 0), Vec2(0, 10), Vec2(10, 10), Vec2(10, 0)])]
     s = System(atomy, scena)
     for atom in s.get_atoms:
@@ -82,4 +82,4 @@ if __name__ == '__main__':
     for atom in s.get_atoms:
         print(atom.pos)
     print(type(scena[0]), type(atomy[0]))
-    sym.run(1000)
+    sym.run(1000000)
