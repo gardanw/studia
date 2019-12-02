@@ -1,13 +1,14 @@
 from Polynomial import Polynomial as pl
 from copy import deepcopy as dc
 
-class Fractional :
+
+class Fractional:
     __slots__ = ['__mianownik', '__licznik']
-    
+
     def __init__(self, licznik, mianownik):
         self.__mianownik = dc(mianownik)
         self.__licznik = dc(licznik)
-    
+
     def add(self, other):
         if type(other) == Fractional:
             if self.__mianownik == other.__mianownik:
@@ -66,12 +67,12 @@ class Fractional :
 
 
 if __name__ == "__main__":
-    w1 = pl(1,2)
-    w2 = pl(2,1)
-    w3 = pl(2,3)
+    w1 = pl(1, 2)
+    w2 = pl(2, 1)
+    w3 = pl(2, 3)
     print(w1, w2, w3)
-    x = Fractional(w1,w2)
-    y = Fractional(w3,w2)
+    x = Fractional(w1, w2)
+    y = Fractional(w3, w2)
     print(x)
     print(y)
     x *= y

@@ -2,7 +2,8 @@ from Atom import Atom
 from Vec2 import Vec2
 from Polygon import Polygon
 
-class System :
+
+class System:
     def __init__(self, atoms=list(), scene=list()):
         self.__atoms = atoms
         self.__scena = scene
@@ -20,6 +21,7 @@ class System :
 
     def __repr__(self):
         return self.__str__()
+
 
 if __name__ == '__main__':
     atomy = [Atom(v=Vec2(1, 2), pos=Vec2(1, 1)), Atom(v=Vec2(1, 2), pos=Vec2(2, 1))]

@@ -1,7 +1,8 @@
 from Vec2 import Vec2
 from copy import deepcopy as dc
 
-class Atom :
+
+class Atom:
     def __init__(self, m=1, v=Vec2(0, 0), pos=Vec2(0, 0), r=0):
         self.__m = m
         self.__v = dc(v)
@@ -33,7 +34,7 @@ class Atom :
     @pos.setter
     def pos(self, pos):
         self.__pos = pos
-        
+
     @v.setter
     def v(self, v):
         self.__v = v
