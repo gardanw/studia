@@ -25,6 +25,7 @@ def collision_a(atom1, atom2):
     f = 2 * v_n.dp(pos_n) / (m_n * pos_n.length() ** 2)
     return f
 
+
 def random_color():
     k1, k2, k3 = np.random.randint(255), np.random.randint(255), np.random.randint(255)
     return pygame.Color(k1, k2, k3, 255)
@@ -54,7 +55,7 @@ class Solver:
                 for n in atom.nodes:
                     pass
 
-    def collision_wall(self):
+    def collision_atom_wall(self):
         for atom in self.__system.get_atoms:
             for p in self.__system.get_scena:
                 if type(p) == Polygon:
@@ -63,15 +64,9 @@ class Solver:
                         if 0 < t < 1:
                             if d.length() <= atom.r:
                                 atom.v = collision_w(atom, d)
-            for p in self.__system.get_atoms:
-                if type(atom) == Atom and type(p) == Polygon and atom != p:
-                    for i in range(len(p.nodes)):
-                        d, t = point_on_segment_projection(atom.pos, p.nodes[i - 1], p.nodes[i])
-                        if 0 < t < 1:
-                            if d.length() <= atom.r:
-                                atom.v = collision_w(atom, d)
+                                atom.pos = atom.pos + dc(atom.v).mul(0.001)
 
-    def collision_atom(self):
+    def collision_atom_atom(self):
         for i in range(len(self.__system.get_atoms)):
             for j in range(i + 1, len(self.__system.get_atoms)):
                 odl = dc(self.__system.get_atoms[i].pos) - self.__system.get_atoms[j].pos
@@ -82,16 +77,16 @@ class Solver:
                         self.__system.get_atoms[j].m * f)
                     self.__system.get_atoms[j].v = self.__system.get_atoms[j].v + x.mul(
                         self.__system.get_atoms[i].m * f)
+                    self.__system.get_atoms[i].pos = self.__system.get_atoms[i].pos + dc(
+                        self.__system.get_atoms[i].v).mul(0.001)
+                    self.__system.get_atoms[j].pos = self.__system.get_atoms[j].pos + dc(
+                        self.__system.get_atoms[j].v).mul(0.001)
 
     def run(self, time):
         for t in range(time):
-            self.collision_atom()
-            self.collision_wall()
+            self.collision_atom_atom()
+            self.collision_atom_wall()
             self.update_pos()
-            for i in range(len(self.__system.get_atoms)):
-                self.__list_pos[i].append(
-                    np.array([self.__system.get_atoms[i].pos.x, self.__system.get_atoms[i].pos.y]))
-        return self.__list_pos
 
     def draw_run(self):
 
@@ -129,17 +124,17 @@ class Solver:
         for scen, kolor in zip(self.__system.get_scena, self.scenes_color):
             point = []
             for i in scen.nodes:
-                point.append([i[0]*10, i[1]*10])
+                point.append([i[0] * 10, i[1] * 10])
             pygame.draw.polygon(self.window, pygame.Color(255, 255, 255, 255), point, 1)
         for atom, kolor in zip(self.__system.get_atoms, self.atoms_color):
             if type(atom) == Atom:
-                center = (int(atom.pos[0]*10), int(atom.pos[1]*10))
+                center = (int(atom.pos[0] * 10), int(atom.pos[1] * 10))
                 rad = dc(atom.r)
                 pygame.draw.circle(self.window, kolor, center, rad * 10, 3)
             elif type(atom) == Polygon:
                 point = []
                 for i in atom.nodes:
-                    point.append([i[0]*10, i[1]*10])
+                    point.append([i[0] * 10, i[1] * 10])
                 pygame.draw.polygon(self.window, pygame.Color(200, 200, 200, 200), point)
 
 
@@ -147,9 +142,9 @@ if __name__ == '__main__':
     # atomy = [Atom(v=Vec2(25, 25), pos=Vec2(20, 22), r=2, m=100), Atom(v=Vec2(-25, -25), pos=Vec2(30, 20), r=1),
     #          Atom(v=Vec2(25, 25), pos=Vec2(41, 23), r=1), Atom(v=Vec2(-25, -25), pos=Vec2(15, 20), r=1),
     #          Atom(v=Vec2(25, 25), pos=Vec2(37, 22), r=1), Atom(v=Vec2(-25, -25), pos=Vec2(16, 4), r=1)]
-    atomy = [Atom(v=Vec2(np.random.randint(25), np.random.randint(25)),
-                          pos=Vec2(np.random.randint(5, 40),np.random.randint(5, 40)), r=np.random.randint(1, 5))]
-    n = 15
+    atomy = [Atom(v=Vec2(np.random.randint(75), np.random.randint(75)),
+                  pos=Vec2(np.random.randint(5, 40), np.random.randint(5, 40)), r=np.random.randint(1, 5), m=20)]
+    n = 25
     i = 0
     while len(atomy) < n:
         x = np.random.randint(5, 40)
@@ -163,14 +158,10 @@ if __name__ == '__main__':
                 flaga += 1
         if flaga == 0:
             mass = rad * 10
-            atomy.append(Atom(v=Vec2(np.random.randint(50), np.random.randint(50)),
-                          pos=p, r=rad, m=mass))
-    # atomy.append(Polygon([Vec2(40, 40), Vec2(40, 45), Vec2(45, 45), Vec2(45, 40)]))
+            atomy.append(Atom(v=Vec2(np.random.randint(75), np.random.randint(75)),
+                              pos=p, r=rad, m=mass))
     scena = [Polygon([Vec2(0, 0), Vec2(0, 50), Vec2(50, 50), Vec2(50, 0)])]
     s = System(atomy, scena)
-    #    for atom in s.get_atoms:
-    #        print(atom.pos)
 
     sym = Solver(s)
     sym.draw_run()
-#    print(sym.run(100))
