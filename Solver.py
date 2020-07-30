@@ -31,13 +31,32 @@ def random_color():
     return pygame.Color(k1, k2, k3, 255)
 
 
+def gen_atom(n):
+    rad = np.random.randint(1, 5)
+    atomy = [Atom(v=Vec2(np.random.randint(75), np.random.randint(75)),
+                  pos=Vec2(np.random.randint(5, 40), np.random.randint(5, 40)), r=rad, m=rad * 10)]
+    i = 0
+    while len(atomy) < n:
+        x = np.random.randint(5, 40)
+        y = np.random.randint(5, 40)
+        p = Vec2(x, y)
+        rad = np.random.randint(1, 5)
+        flaga = 0
+        for atom in atomy:
+            odl = dc(atom.pos) - p
+            if odl.length() < atom.r + rad:
+                flaga += 1
+        if flaga == 0:
+            mass = rad * 10
+            atomy.append(Atom(v=Vec2(np.random.randint(75), np.random.randint(75)),
+                              pos=p, r=rad, m=mass))
+    return atomy
+
+
 class Solver:
     def __init__(self, system, dt=0.001):
         self.__system = system
         self.__dt = dt
-        self.__list_pos = []
-        for i in range(len(self.__system.get_atoms)):
-            self.__list_pos.append([np.array([self.__system.get_atoms[i].pos.x, self.__system.get_atoms[i].pos.y])])
 
         self.atoms_color = []
         for i in range(len(self.__system.get_atoms)):
@@ -63,7 +82,9 @@ class Solver:
                         d, t = point_on_segment_projection(atom.pos, p.nodes[i - 1], p.nodes[i])
                         if 0 < t < 1:
                             if d.length() <= atom.r:
+                                # print('1',atom.v)
                                 atom.v = collision_w(atom, d)
+                                # print('2',atom.v)
                                 atom.pos = atom.pos + dc(atom.v).mul(0.001)
 
     def collision_atom_atom(self):
@@ -141,25 +162,15 @@ class Solver:
 if __name__ == '__main__':
     # atomy = [Atom(v=Vec2(25, 25), pos=Vec2(20, 22), r=2, m=100), Atom(v=Vec2(-25, -25), pos=Vec2(30, 20), r=1),
     #          Atom(v=Vec2(25, 25), pos=Vec2(41, 23), r=1), Atom(v=Vec2(-25, -25), pos=Vec2(15, 20), r=1),
-    #          Atom(v=Vec2(25, 25), pos=Vec2(37, 22), r=1), Atom(v=Vec2(-25, -25), pos=Vec2(16, 4), r=1)]
-    atomy = [Atom(v=Vec2(np.random.randint(75), np.random.randint(75)),
-                  pos=Vec2(np.random.randint(5, 40), np.random.randint(5, 40)), r=np.random.randint(1, 5), m=20)]
-    n = 25
-    i = 0
-    while len(atomy) < n:
-        x = np.random.randint(5, 40)
-        y = np.random.randint(5, 40)
-        p = Vec2(x, y)
-        rad = np.random.randint(1, 5)
-        flaga = 0
-        for atom in atomy:
-            odl = dc(atom.pos) - p
-            if odl.length() < atom.r + rad:
-                flaga += 1
-        if flaga == 0:
-            mass = rad * 10
-            atomy.append(Atom(v=Vec2(np.random.randint(75), np.random.randint(75)),
-                              pos=p, r=rad, m=mass))
+    #          Atom(v=Vec2(25, 25), pos=Vec2(37, 22), r=1), Atom(v=Vec2(-25, -25), pos=Vec2(16, 4), r=1),
+    #          Atom(v=Vec2(10, 10), pos=Vec2(3,3), r=2, m=1)]
+
+    # atomy = [Atom(v=Vec2(10, 10), pos=Vec2(3, 3), r=2, m=1)]
+
+    atomy = gen_atom(5)
+    #
+    # atomy.append(Atom(v=Vec2(-1, 1),
+    #                   pos=Vec2(1, 1), r=1, m=1))
     scena = [Polygon([Vec2(0, 0), Vec2(0, 50), Vec2(50, 50), Vec2(50, 0)])]
     s = System(atomy, scena)
 
